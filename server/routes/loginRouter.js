@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
 const passport = require('passport')
+
 const token = require('../auth-strategies/utils/token')
 require('../auth-strategies/google')
 function generateUserToken(req, res) {
@@ -9,7 +10,15 @@ function generateUserToken(req, res) {
     res.cookie('token',accessToken)
     res.send(accessToken)
 }
+
+
 router.get('/',
+(req,res,next)=>{
+    res.header('Access-Control-Allow-Origin','*');
+    // res.header('Access-Control-Allow-Origin',"Origin, X-Requested-With,Content-Type, Accept")
+    console.log('yes')
+    next();
+},
     passport.authenticate('google', { session: false, scope: ['openid', 'profile', 'email'] }));
 router.get('/redirect',
     passport.authenticate('google', { session: false }),

@@ -8,6 +8,7 @@ const userSchema = new Schema({
         minlength: 5,
         maxlength: 255,
         unique: true,
+        
       }
 })
 const users = mongoose.model('Users', userSchema);
