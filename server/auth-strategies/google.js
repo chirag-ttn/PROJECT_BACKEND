@@ -11,11 +11,11 @@ const passportConfig = {
 
 if (passportConfig.clientID) {
     passport.use(new passportGoogle.OAuth2Strategy(passportConfig, function (request, accessToken, refreshToken, profile, done) {
-
+        // console.log(profile)
         Users.find({email:profile.emails[0].value},(err,user)=>{
-            // console.log(user)
+            console.log('user',user)
             if(err) return done(err);
-            if(!user)
+            if(!user.length)
             {
                 user = new Users({
                     email:profile.emails[0].value.toString()
