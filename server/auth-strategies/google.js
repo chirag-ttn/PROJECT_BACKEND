@@ -14,14 +14,18 @@ const passportConfig = {
 
 if (passportConfig.clientID) {
     passport.use(new passportGoogle.OAuth2Strategy(passportConfig, function (request, accessToken, refreshToken, profile, done) {
-        // const url = cloudinary.save(profile)
+        // console.log(profile)
         Users.find({email:profile.emails[0].value},(err,user)=>{
-            console.log('user',user)
+            
             if(err) return done(err);
             if(!user.length)
             {
+                
                 user = new Users({
-                    email:profile.emails[0].value.toString()
+                    email:profile.emails[0].value.toString(),
+                    f_name:profile.name.givenName,
+                    l_name:profile.name.familyName,
+                    profile_pic:profile.photos[0].value
                 })
                 console.log(user)
                 user.save((err)=>{

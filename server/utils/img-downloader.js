@@ -7,6 +7,7 @@ var download = function(uri, filename, callback){
     console.log('content-length:', res.headers['content-length']);
 
     request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+    
   });
 };
 
