@@ -1,11 +1,8 @@
 const passport = require('passport');
 const passportGoogle = require('passport-google-oauth');
 require('dotenv').config()
-const cloudinary = require('../cloudinary')
-
 // const users = require('../users');
 const Users = require('../models/main/users')
-
 const passportConfig = {
     clientID: process.env.CLIENT_ID,
     clientSecret:process.env.CLIENT_SECRET,
@@ -14,7 +11,7 @@ const passportConfig = {
 
 if (passportConfig.clientID) {
     passport.use(new passportGoogle.OAuth2Strategy(passportConfig, function (request, accessToken, refreshToken, profile, done) {
-        // const url = cloudinary.save(profile)
+        // console.log(profile)
         Users.find({email:profile.emails[0].value},(err,user)=>{
             console.log('user',user)
             if(err) return done(err);

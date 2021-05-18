@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
-const requestsSchema = require("../utils/requests.js");
-const requestedSchema = require("../utils/requested.js");
-const Profile_Dp_Schema = require("../utils/profile_dps.js");
-const suggestionSchema = require('../utils/suggestions.js')
-const friendsSchema = require('../utils/friends.js')
+const requestsSchema = require("requests.js");
+const requestedSchema = require("requested.js");
+const Profile_Dp_Schema = require("profile_dps.js");
+const suggestionSchema = require('suggestions.js')
+const friendsSchema = require('friends.js')
 
 
 let ProfileSchema = new mongoose.Schema({
@@ -27,26 +27,6 @@ let ProfileSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    website: {
-        type: String,
-        required: true,
-    },
-    designation: {
-        type: String,
-        required: true,
-    },
-    city: {
-        type: String,
-        required: true,
-    },
-    state: {
-        type: String,
-        required: true,
-    },
-    zip: {
-        type: Number,
-        required: true,
-    },
     user_id: {
         type: mongoose.SchemaTypes.ObjectId,//id from users model
         required: true,
@@ -58,7 +38,7 @@ let ProfileSchema = new mongoose.Schema({
     cover_pic: {
         data: Buffer,
         contentType: String,
-        default: [],
+        default: {},
     },
     about: {
         type: String,
@@ -82,4 +62,4 @@ let ProfileSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Profile',ProfileSchema) 
+module.exports = ProfileSchema

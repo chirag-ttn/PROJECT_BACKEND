@@ -11,7 +11,7 @@ const jwtOptions = {
 };
 
 passport.use(new passportJwt.Strategy(jwtOptions, (payload, done) => {
-    
+    console.log(payload)
         Users.findById(payload.sub,(err,user)=>{
             if(err) return done(err)
             if(user)
