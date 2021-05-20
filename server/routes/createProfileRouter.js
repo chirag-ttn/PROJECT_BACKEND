@@ -5,21 +5,10 @@ const jwt = require('jsonwebtoken')
 const passport = require('passport')
 const passportjwt = require('passport-jwt')
 const ProfileController = require('../controllers/profile/createProfile')
+const auth = require('../middlewares/jwt_auth')
 require('../auth-strategies/jwt')
 require('dotenv').config()
 router.use(cors())
-
-router.post('/',(req,res,next)=>{
-    const authToken = req.headers.authorization;
-    console.log(authToken,process.env.SECRET_OR_KEY)
-    jwt.verify(authToken,process.env.SECRET_OR_KEY,(err,decoded)=>{
-        if(err){
-            res.redirect('http://localhost:3000')
-            throw err
-        }
-        req.user = decoded
-    })
-    next()
-},ProfileController.createProfile);
+router.post('/',auth,ProfileController.createProfile);
 
 module.exports = router;

@@ -7,7 +7,6 @@ const {userData} = require('../controllers/userData/userData')
 require('../auth-strategies/google')
 
 function generateUserToken(req, res,next) {
-    console.log(req.user)
     const accessToken = token.generateAccessToken(req.user[0]._id);
     
     res.cookie('token',accessToken)
