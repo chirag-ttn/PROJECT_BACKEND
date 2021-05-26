@@ -58,53 +58,63 @@ exports.likePost = async (req, res, next) => {
     // console.log(req.body, req.user)
 
     try {
-        const user_id = req.user.sub;
-        const post_id = req.body.id
-        const response = PostService.likePost(user_id, post_id)
+        console.log(req.query)
+        const {user_profile_id,post_id} = req.query
+        const response = PostService.likePost(user_profile_id, post_id)
         res.send(response)
     }
     catch (e) {
         res.send(e)
     }
 }
-exports.dislikePost = async (req, res, next) => {
+exports.unlikePost = async (req, res, next) => {
     // console.log(req.body, req.user)
-
+    
     try {
-        const user_id = req.user.sub;
-        const post_id = req.body.id
-        const response = PostService.dislikePost(user_id, post_id)
+        const {user_profile_id,post_id} = req.query
+        const response = PostService.unlikePost(user_profile_id, post_id)
         res.send(response)
     }
     catch (e) {
         res.send(e)
     }
+
+}
+exports.dislikePost = async (req, res, next) => {
+    // console.log(req.body, req.user)
+    
+    try {
+        const {user_profile_id,post_id} = req.query
+        const response = PostService.dislikePost(user_profile_id, post_id)
+        res.send(response)
+    }
+    catch (e) {
+        res.send(e)
+    }
+
+}
+exports.undislikePost = async (req, res, next) => {
+    // console.log(req.body, req.user)
+    
+    try {
+        const {user_profile_id,post_id} = req.query
+        const response = PostService.undislikePost(user_profile_id, post_id)
+        res.send(response)
+    }
+    catch (e) {
+        res.send(e)
+    }
+
 }
 exports.flagPost = async (req, res, next) => {
     // console.log(req.body, req.user)
 
-    try {
-        const user_id = req.user.sub;
-        const post_id = req.body.id
-        const response = PostService.flagPost(user_id, post_id)
-        res.send(response)
-    }
-    catch (e) {
-        res.send(e)
-    }
+    
 }
 exports.unflagPost = async (req, res, next) => {
     // console.log(req.body, req.user)
 
-    try {
-        const user_id = req.user.sub;
-        const post_id = req.body.id
-        const response = PostService.unflagPost(user_id, post_id)
-        res.send(response)
-    }
-    catch (e) {
-        res.send(e)
-    }
+    
 }
 exports.deletePost = async (user_id, data) => {
     try {

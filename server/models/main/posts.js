@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose;
-const likeSchema = require('../utils/comment')
+const likeSchema = require('../utils/like')
 const commentSchema = require('../utils/comment')
 var ObjectId = Schema.ObjectId;
 const postSchema = new Schema({
@@ -16,6 +16,10 @@ const postSchema = new Schema({
         type: String,
       },
       likes: {
+        type: [likeSchema],
+        default: [],
+      },
+      dislikes: {
         type: [likeSchema],
         default: [],
       },

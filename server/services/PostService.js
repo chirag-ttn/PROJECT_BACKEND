@@ -37,16 +37,61 @@ exports.getAllPosts = async (user_id) => {
         throw new Error(e)
     }
 }
-exports.likePost = async (user_id, data) => {
+exports.likePost = async (user_profile_id, post_id) => {
     try {
+        const post = await Posts.findOne({_id:post_id})
+        console.log(post)
+        post.likes.push(user_profile_id)
+        let idx = post.dislikes.indexOf(user_profile_id)
+        if(idx>-1)
+        {
+            post.dislikes.splice(idx,1)
+        }
+        return await post.save()
+    }
+    catch (e) {
+        throw new Error(e)
+    }
+}
+exports.unlikePost = async (user_profile_id, post_id) => {
+    try {
+        const post = await Posts.findOne({_id:post_id})
+        let idx = post.likes.indexOf(user_profile_id)
+        if(idx>-1)
+        {
+            post.likes.splice(idx,1)
+        }
+        return await post.save()
+    }
+    catch (e) {
+        throw new Error(e)
+    }
+}
+exports.dislikePost = async (user_profile_id, post_id) => {
+    try {
+        const post = await Posts.findOne({_id:post_id})
+        post.dislikes.push(user_profile_id)
+        let idx = post.likes.indexOf(user_profile_id)
+        if(idx>-1)
+        {
+            post.likes.splice(idx,1)
+        }
+        return post.save()
 
     }
     catch (e) {
         throw new Error(e)
     }
 }
-exports.dislikePost = async (user_id, data) => {
+exports.undislikePost = async (user_profile_id, post_id) => {
     try {
+        const post = await Posts.findOne({_id:post_id})
+        let idx = post.dislikes.indexOf(user_profile_id)
+        if(idx>-1)
+        {
+            post.dislikes.splice(idx,1)
+        }
+        return post.save()
 
     }
     catch (e) {
@@ -61,14 +106,7 @@ exports.flagPost = async (user_id, data) => {
         throw new Error(e)
     }
 }
-exports.createPost = async (user_id, data) => {
-    try {
 
-    }
-    catch (e) {
-        throw new Error(e)
-    }
-}
 exports.unflagPost = async (user_id, data) => {
     try {
 

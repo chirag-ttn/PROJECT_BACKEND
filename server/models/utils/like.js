@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 
-module.exports = new mongoose.Schema({
-  _id: {
+module.exports = {
     type: mongoose.Types.ObjectId,
     ref: "Profile",
     requried: true,
-  },
-});
+  }
 
