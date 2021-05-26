@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const requestsSchema = require("../utils/requests.js");
 const requestedSchema = require("../utils/requested.js");
 const Profile_Dp_Schema = require("../utils/profile_dps.js");
-const suggestionSchema = require('../utils/suggestions.js')
+// const suggestionSchema = require('../utils/suggestions.js')
 const friendsSchema = require('../utils/friends.js')
 
 
@@ -65,7 +65,7 @@ let ProfileSchema = new mongoose.Schema({
         default: "",
     },
     requested: {
-        type: [requestedSchema],//whom user has requested
+        type:[requestedSchema],//whom user has requested
         default: [],
     },
     requests: {
@@ -77,7 +77,7 @@ let ProfileSchema = new mongoose.Schema({
         default:[]
     },
     suggestions:{
-        type: [suggestionSchema],//total users  - friends - requests - requested - user - moderator
+        type: [friendsSchema],//total users  - friends - requests - requested - user - moderator
         default:[],
     }
 });

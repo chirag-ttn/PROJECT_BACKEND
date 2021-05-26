@@ -26,9 +26,8 @@ if (passportConfig.clientID) {
                     l_name:profile.name.familyName,
                     profile_pic:profile.photos[0].value
                 })
-                console.log(user)
                 user.save((err)=>{
-                    err?console.log(err):console.log('Yay')
+                    return(err)
                 });
             }
             return done(null,user)
