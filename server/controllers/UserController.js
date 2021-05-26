@@ -60,7 +60,7 @@ exports.removeFriend = async (req, res) => {
 exports.rejectFriendResponded = async (req, res) => {
     try {
         
-        const { user_id,friend_id } = req.query        
+        const { user_id,friend_id } = req.query  
         const data = await UserService.rejectFriendResponded(user_id, friend_id)
         res.send(data)
     }

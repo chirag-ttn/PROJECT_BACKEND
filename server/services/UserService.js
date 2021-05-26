@@ -133,10 +133,9 @@ exports.removeFriend = async (user_id, friend_id) => {
         return err;
     }
 }
-exports.rejectRequestResponded = async (user_id, friend_id) => {
+exports.rejectFriendResponded = async (user_id, friend_id) => {
     try {
         //if a user reject friend request
-        console.log(user_id, friend_id)
         // user view
         //user_id -> pull friend_id from requests && push friend_id to suggestions or not
         const user_profile = await Profiles.findOneAndUpdate(
