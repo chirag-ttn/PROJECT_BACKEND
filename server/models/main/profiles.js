@@ -65,21 +65,31 @@ let ProfileSchema = new mongoose.Schema({
         default: "",
     },
     requested: {
-        type:[requestedSchema],//whom user has requested
+        type: [requestedSchema],//whom user has requested
         default: [],
     },
     requests: {
         type: [requestsSchema],//pending requests
         default: [],
     },
-    friends:{
-        type:[friendsSchema],//friends
-        default:[]
+    friends: {
+        type: [friendsSchema],//friends
+        default: []
     },
-    suggestions:{
+    posts: {
+        type: [{
+
+            type: mongoose.Types.ObjectId,
+            ref: "Profile",
+            required: true,
+
+        }],
+        default: []
+    },
+    suggestions: {
         type: [friendsSchema],//total users  - friends - requests - requested - user - moderator
-        default:[],
+        default: [],
     }
 });
 
-module.exports = mongoose.model('Profile',ProfileSchema) 
+module.exports = mongoose.model('Profile', ProfileSchema)

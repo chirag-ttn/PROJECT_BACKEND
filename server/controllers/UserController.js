@@ -1,7 +1,8 @@
 const UserService = require('../services/UserService')
-const Profile = require('../models/main/profiles')
+const Users = require('../models/main/users')
+const mongoose = require('mongoose')
 const { cloudinary } = require('../cloudinary')
-
+const Profile = require('../models/main/profiles')
 
 exports.getAllUsers = async (req, res) => {
     try {
@@ -15,12 +16,29 @@ exports.getAllUsers = async (req, res) => {
 }
 exports.getUser = async (req,res)=>{
     try{
-        console.log(req.user.sub)
         const data = await UserService.getUser(req.user.sub)
         res.send(data)
     }
     catch(e){
         res.send(e)
+    }
+}
+exports.updateSuggestions = async (req,res)=>{
+    try{
+        
+        const user_id = req.user.sub;
+        const user_profile_id = req.query.user_id
+        const data = await Users.find({_id:{$ne:user_id}},{'profile_id':1,_id:0}).exec()
+        const pureData = data.map((val)=>{
+            return (val.profile_id)
+        })
+        const updateProfile = await Profile.updateOne({_id:user_profile_id},{$addToSet:{'suggestions':pureData}})
+        
+        console.log(pureData,updateProfile)
+        res.send(pureData)
+    }
+    catch(err){
+        res.send(err)
     }
 }
 exports.addFriendRequested = async (req, res) => {

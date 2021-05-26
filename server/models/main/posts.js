@@ -10,6 +10,7 @@ const postSchema = new Schema({
       author_id: {
         type: mongoose.SchemaTypes.ObjectId,
         ref: "Profile",
+        required:true
       },
       imageUrl: {
         type: String,

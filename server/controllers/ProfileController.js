@@ -21,7 +21,6 @@ exports.createProfile = async (req, res) => {
             id: req.user.sub
         }
         const out = await Profile.createProfile(data)
-        console.log(out)
         res.status(200).send('user created')
     }
     catch (e) {

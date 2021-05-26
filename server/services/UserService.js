@@ -20,6 +20,7 @@ exports.getUser = async (user_id) => {
         return err;
     }
 }
+
 exports.addFriendRequested = async (user_id, friend_id) => {
     try {
         console.log(user_id, friend_id)

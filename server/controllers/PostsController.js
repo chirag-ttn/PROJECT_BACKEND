@@ -1,36 +1,40 @@
 const PostService = require('../services/PostService')
 const Posts = require('../models/main/posts')
-const {createPost} = PostService
+const Profile = require('../models/main/profiles')
 const { cloudinary } = require('../cloudinary')
 
 
 exports.createPost = async (req, res) => {
-    // console.log(req)
     try {
-        const user_id = req.user.sub;
         const file = req.files.image
         const text = req.body.text
+        const id = req.body.profile_id
         
         const {url} = await cloudinary.uploader.upload(file.path)
         const data = {
-            id:user_id,
+            id:id,
             text:text,
             url:url
         }
-        // console.log(data)
+        console.log(data)
         const post = {
             description: data.text,
             author_id: data.id,
             imageUrl: data.url,
         }
+        
         const new_post = new Posts(post);
-        new_post.save().then(response=>{
-            // console.log(response)
-            res.send(response)
-        }).catch(e=>{
-            // console.log(e)
-            res.send(e)
+        const response = await new_post.save()
+        // console.log(response)
+        // updating profile with post id
+        const profile =  await Profile.findOneAndUpdate({_id:id},{
+            $addToSet:{
+                'posts':response._id
+            }
         })
+        const resp = await profile.save()
+        // console.log(resp)
+        res.send(response)
         
     }
     catch (e) {

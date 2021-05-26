@@ -1,5 +1,6 @@
-const { response } = require('express')
+const Profile = require('../models/main/profiles')
 const Posts = require('../models/main/posts')
+const friends = require('../models/utils/friends')
 
 exports.createPost = async function(data,res){
     try {
@@ -21,10 +22,15 @@ exports.createPost = async function(data,res){
         return e;
     }
 }
-exports.getAllPosts = async (user_id, data) => {
+exports.getAllPosts = async (user_id) => {
     try {
-        const data = await Posts.find({})
-        // console.log('SERVICE=>>>>>',data)
+        const user_profile = await Profile.findOne({user_id:user_id})
+        const friendsArr = user_profile.friends
+        friendsArr.push(user_profile._id)
+        console.log(friendsArr)
+        const data = await Posts.find({author_id:{$in:friendsArr}}).populate('author_id').skip(0).limit(100).exec();
+
+        console.log('SERVICE=>>>>>',data)
         return data;
     }
     catch (e) {

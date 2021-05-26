@@ -7,7 +7,6 @@ exports.createProfile = async (data) => {
         //find all the profile_ids of all users and add it to suggestions initially
         let new_profile = null
         const ifProfileExist = await Profile.findOne({ user_id: data.id }).exec()
-        console.log(ifProfileExist)
         if (ifProfileExist) {
             const all_profile_data = await Profile.aggregate([{$match:{_id:{$ne:ifProfileExist._id}}},{$project:{"_id":1}}])
             const profile = ifProfileExist
