@@ -58,8 +58,8 @@ exports.likePost = async (req, res, next) => {
     // console.log(req.body, req.user)
 
     try {
-        console.log(req.query)
-        const {user_profile_id,post_id} = req.query
+        console.log(req.body)
+        const {user_profile_id,post_id} = req.body
         const response = PostService.likePost(user_profile_id, post_id)
         res.send(response)
     }
@@ -71,7 +71,7 @@ exports.unlikePost = async (req, res, next) => {
     // console.log(req.body, req.user)
     
     try {
-        const {user_profile_id,post_id} = req.query
+        const {user_profile_id,post_id} = req.body
         const response = PostService.unlikePost(user_profile_id, post_id)
         res.send(response)
     }
@@ -84,7 +84,7 @@ exports.dislikePost = async (req, res, next) => {
     // console.log(req.body, req.user)
     
     try {
-        const {user_profile_id,post_id} = req.query
+        const {user_profile_id,post_id} = req.body
         const response = PostService.dislikePost(user_profile_id, post_id)
         res.send(response)
     }
@@ -97,7 +97,7 @@ exports.undislikePost = async (req, res, next) => {
     // console.log(req.body, req.user)
     
     try {
-        const {user_profile_id,post_id} = req.query
+        const {user_profile_id,post_id} = req.body
         const response = PostService.undislikePost(user_profile_id, post_id)
         res.send(response)
     }
