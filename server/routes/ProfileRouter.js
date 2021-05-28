@@ -10,6 +10,7 @@ require('../auth-strategies/jwt')
 require('dotenv').config()
 router.use(cors())
 router.post('/createProfile',auth,ProfileController.createProfile);
+router.post('/uploadImage',auth,ProfileController.uploadImage);
 router.get('/getUserProfile',auth,ProfileController.getUserProfile);
 router.get('/getAnyUserProfile',auth,ProfileController.getAnyUserProfile);
 module.exports = router;

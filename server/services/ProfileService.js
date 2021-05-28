@@ -1,5 +1,6 @@
 const Profile = require('../models/main/profiles')
 const Users = require('../models/main/users')
+const {cloudinary} = require('../cloudinary')
 const mongoose = require('mongoose')
 exports.createProfile = async (data) => {
 
@@ -85,6 +86,17 @@ exports.getAnyUserProfile = async (id) => {
         else {
             return null;
         }
+    }
+    catch (err) {
+        return new Error(err);
+    }
+}
+exports.getAnyUserProfile = async (id,file) => {
+    try {
+
+        const { url } = await cloudinary.uploader.upload(file.path)
+        const user = await Profile.findOne({ user_id: id })
+        
     }
     catch (err) {
         return new Error(err);

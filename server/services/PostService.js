@@ -27,14 +27,13 @@ exports.getAllPosts = async (user_id) => {
         const user_profile = await Profile.findOne({user_id:user_id})
         const friendsArr = user_profile.friends
         friendsArr.push(user_profile._id)
-        console.log(friendsArr)
-        const data = await Posts.find({author_id:{$in:friendsArr}}).populate('author_id').skip(0).limit(100).exec();
+        const data = await Posts.find({author_id:{$in:friendsArr}}).populate('author_id').populate('comments.profile_id').exec();
 
-        console.log('SERVICE=>>>>>',data)
+        // console.log('SERVICE=>>>>>',data)
         return data;
     }
     catch (e) {
-        throw new Error(e)
+        return e;
     }
 }
 exports.likePost = async (user_profile_id, post_id) => {
@@ -50,7 +49,7 @@ exports.likePost = async (user_profile_id, post_id) => {
         return await post.save()
     }
     catch (e) {
-        throw new Error(e)
+        return e;
     }
 }
 exports.unlikePost = async (user_profile_id, post_id) => {
@@ -64,7 +63,7 @@ exports.unlikePost = async (user_profile_id, post_id) => {
         return await post.save()
     }
     catch (e) {
-        throw new Error(e)
+        return e;
     }
 }
 exports.dislikePost = async (user_profile_id, post_id) => {
@@ -80,7 +79,7 @@ exports.dislikePost = async (user_profile_id, post_id) => {
 
     }
     catch (e) {
-        throw new Error(e)
+        return e;
     }
 }
 exports.undislikePost = async (user_profile_id, post_id) => {
@@ -95,23 +94,43 @@ exports.undislikePost = async (user_profile_id, post_id) => {
 
     }
     catch (e) {
-        throw new Error(e)
+        return e;
     }
 }
-exports.flagPost = async (user_id, data) => {
+exports.flagPost = async (user_id, post_id) => {
     try {
-
+        const post = await Posts.findOneAndUpdate({_id:post_id},{$inc:{'flagged':1}})
+        return await post.save()
     }
     catch (e) {
-        throw new Error(e)
+        return e;
     }
 }
 
-exports.unflagPost = async (user_id, data) => {
+exports.unflagPost = async (user_id, post_id) => {
     try {
-
+        const post = await Posts.findOneAndUpdate({_id:post_id},{$dec:{'flagged':1}})
+        return await post.save()
     }
     catch (e) {
-        throw new Error(e)
+        return e;
+    }
+}
+exports.createComment = async (profile_id,post_id,comment) =>{
+    try{
+        const new_comment = {
+            profile_id:profile_id,
+            post_id:post_id,
+            comment:comment
+        }
+        // console.log('COMMENT=====>',new_comment)
+        const post = await Posts.findOneAndUpdate({_id:post_id},{$push:{'comments':new_comment}})
+        const data = await post.save()
+        // console.log('DATA======>',data)
+        return data;
+    }
+    catch(e){
+        console.log(e)
+        return e;
     }
 }

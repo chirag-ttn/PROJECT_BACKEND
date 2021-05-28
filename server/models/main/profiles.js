@@ -52,13 +52,10 @@ let ProfileSchema = new mongoose.Schema({
         required: true,
     },
     profile_Dps: {
-        type: [Profile_Dp_Schema],
-        default: [],
+        type: String,
     },
     cover_pic: {
-        data: Buffer,
-        contentType: String,
-        default: [],
+        type:String,
     },
     about: {
         type: String,

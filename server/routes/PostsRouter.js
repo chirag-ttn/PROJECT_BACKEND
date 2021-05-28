@@ -13,12 +13,16 @@ router.use(cors())
 router.get('/getAllPosts',auth,PostRouter.getAllPosts);
 router.post('/createPost',auth,PostRouter.createPost);
 router.post('/deletePost',auth,PostRouter.deletePost);
+
 router.post('/likePost',auth,PostRouter.likePost);
 router.post('/unlikePost',auth,PostRouter.unlikePost);
 router.post('/dislikePost',auth,PostRouter.dislikePost);
 router.post('/undislikePost',auth,PostRouter.undislikePost);
+
+router.post('/createComment',auth,PostRouter.createComment);
+
 router.post('/flagPost',auth,PostRouter.flagPost);
-router.post('/unflag',auth,PostRouter.unflagPost);
+router.post('/unflagPost',auth,PostRouter.unflagPost);
 
 
 

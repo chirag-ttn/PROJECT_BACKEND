@@ -23,6 +23,10 @@ const postSchema = new Schema({
         type: [likeSchema],
         default: [],
       },
+      flagged:{
+        type:Number,
+        default:0
+      },
       comments: {
         type: [commentSchema],
         default: [],

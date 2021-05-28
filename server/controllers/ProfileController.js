@@ -48,3 +48,14 @@ exports.getAnyUserProfile = async (req, res) => {
         res.send(e)
     }
 }
+exports.uploadImage = async (req,res) =>{
+    try{
+        console.log(req.files)
+        const user_id = req.user.sub;
+        const data = await Profile.upload_image(user_id)
+        res.send('profile_updated');
+    }
+    catch(e){
+        res.send(e)
+    }
+}

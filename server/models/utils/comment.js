@@ -1,18 +1,21 @@
 const mongoose = require("mongoose");
 
-module.exports = new mongoose.Schema({
+module.exports = {
   profile_id: {
     type: mongoose.Types.ObjectId,
     ref: "Profile",
     requried: true,
   },
+  post_id:{
+    type:mongoose.Types.ObjectId,
+    ref:'posts',
+  },
   comment: {
     type: String,
     required: true,
-    minlength: 5,
   },
   date: {
     type: Date,
     default: Date.now(),
   },
-});
+}
