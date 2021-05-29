@@ -117,6 +117,37 @@ exports.unflagPost = async (user_id, post_id) => {
         return e;
     }
 }
+exports.getFlaggedPosts = async () => {
+    try {
+        const post = await Posts.find({flagged:{$gte:5}})
+        
+        return post;
+    }
+    catch (e) {
+        return e;
+    }
+}
+exports.removeFlaggedPost = async (post_id) => {
+    try {
+        const post = await Posts.findOneAndDelete({_id:post_id})
+        return post;
+    }
+    catch (e) {
+        return e;
+    }
+}
+exports.approveFlaggedPost = async (post_id) => {
+    try {
+        const post = await Posts.findOneAndUpdate({_id:post_id},{$set:{flagged:0}})
+        console.log(post)
+        await post.save()
+        console.log('after',post)
+        return post;
+    }
+    catch (e) {
+        return e;
+    }
+}
 exports.createComment = async (profile_id,post_id,comment) =>{
     try{
         const new_comment = {

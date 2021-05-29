@@ -41,7 +41,7 @@ exports.getUserProfile = async (req, res) => {
 exports.getAnyUserProfile = async (req, res) => {
     try {
         const user_id = req.query.profile_id
-        const userProfile = await Profile.getAnyuserProfile(user_id)
+        const userProfile = await Profile.getAnyUserProfile(user_id)
         res.send(userProfile)
     }
     catch (e) {

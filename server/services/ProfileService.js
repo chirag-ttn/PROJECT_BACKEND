@@ -27,6 +27,7 @@ exports.createProfile = async (data) => {
         }
         else {
             const profile_img = await Users.findById({_id:data.id},{'profile_pic':1})
+            
             const all_profile_data = await Profile.aggregate([{$project:{"_id":1}}])
             const profile = new Profile({
                 firstname: data.body.firstname,
@@ -82,6 +83,7 @@ exports.getAnyUserProfile = async (id) => {
     try {
 
         const user = await Profile.findOne({ _id: id }).populate('suggestions').exec()
+        console.log(user)
         if (user) {
             return user;
         }

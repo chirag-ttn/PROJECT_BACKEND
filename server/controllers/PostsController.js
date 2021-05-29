@@ -128,10 +128,33 @@ exports.unflagPost = async (req, res, next) => {
         res.send(e)
     }
 }
-//moderator
-exports.deletePost = async (user_id, data) => {
+exports.getFlaggedPosts = async (req, res, next) => {
     try {
+        const response = await PostService.getFlaggedPosts()
+        res.send(response)
+    }
+    catch (e) {
+        res.send(e)
+    }
+}
+//moderator
+exports.removeFlaggedPosts = async (req,res,next) => {
+    try {
+        console.log('remove ')
+        const {post_id} = req.body
+        const response = await PostService.removeFlaggedPost(post_id)
+        res.send(response)
+    }
+    catch (e) {
+        res.send(e)
+    }
+}
 
+exports.approveFlaggedPosts = async (req,res,next) => {
+    try {
+        const {post_id} = req.body
+        const response = await PostService.approveFlaggedPost(post_id)
+        res.send(response)
     }
     catch (e) {
         res.send(e)

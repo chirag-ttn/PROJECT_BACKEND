@@ -12,7 +12,6 @@ const PostRouter = require('../controllers/PostsController');
 router.use(cors())
 router.get('/getAllPosts',auth,PostRouter.getAllPosts);
 router.post('/createPost',auth,PostRouter.createPost);
-router.post('/deletePost',auth,PostRouter.deletePost);
 
 router.post('/likePost',auth,PostRouter.likePost);
 router.post('/unlikePost',auth,PostRouter.unlikePost);
@@ -25,6 +24,11 @@ router.post('/createComment',auth,PostRouter.createComment);
 
 router.post('/flagPost',auth,PostRouter.flagPost);
 router.post('/unflagPost',auth,PostRouter.unflagPost);
+
+router.get('/getFlaggedPosts',auth,PostRouter.getFlaggedPosts);
+router.post('/approveFlaggedPost',auth,PostRouter.approveFlaggedPosts);
+router.post('/removeFlaggedPost',auth,PostRouter.removeFlaggedPosts);
+
 
 
 
