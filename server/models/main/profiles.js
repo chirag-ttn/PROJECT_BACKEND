@@ -51,11 +51,13 @@ let ProfileSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,//id from users model
         required: true,
     },
-    profile_Dps: {
+    profile_image: {
         type: String,
+        default:''
     },
-    cover_pic: {
+    cover_image: {
         type:String,
+        default:''
     },
     about: {
         type: String,

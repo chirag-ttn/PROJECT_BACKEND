@@ -6,7 +6,6 @@ const { cloudinary } = require('../cloudinary')
 
 exports.createPost = async (req, res) => {
     try {
-        console.log(req.files)
         const file = req.files.image
         const text = req.body.text
         const id = req.body.profile_id
@@ -22,6 +21,7 @@ exports.createPost = async (req, res) => {
             description: data.text,
             author_id: data.id,
             imageUrl: data.url,
+            date: new Date()
         }
 
         const new_post = new Posts(post);
@@ -39,6 +39,7 @@ exports.createPost = async (req, res) => {
 
     }
     catch (e) {
+        console.log('error',e)
         res.send(e)
     }
 }
@@ -148,7 +149,26 @@ exports.createComment = async (req, res, next) => {
     }
     
 }
-exports.getAllComments = async (req, res, next) => {
+exports.verifyLikeStatus = async (req,res) => {
+    try {
+        const {user_profile_id,post_id} = req.query
+        const response = await PostService.verifyLikeStatus(user_profile_id,post_id)
+        res.send(response)
+    }
+    catch (e) {
+        res.send(e)
+    }
+}
 
+exports.verifyDislikeStatus = async (req,res) => {
+    try {
+        const {user_profile_id,post_id} = req.query
+        const response = await PostService.verifyDislikeStatus(user_profile_id,post_id)
+        console.log(response)
+        res.send(response)
 
+    }
+    catch (e) {
+        res.send(e)
+    }
 }

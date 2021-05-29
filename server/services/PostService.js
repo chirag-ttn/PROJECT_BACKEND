@@ -4,15 +4,17 @@ const friends = require('../models/utils/friends')
 
 exports.createPost = async function(data,res){
     try {
-        
+        console.log(new Date())
         const post = {
             description: data.text,
             author_id: data.id,
             imageUrl: data.url,
+            date: new Date()
         }
         let new_post = new Posts(post)
-        new_post.save().then(response=>{
-            res.send(response)
+        new_post.save().then(data=>{
+            console.log(data)
+            return data
         })
         .catch(err=>{
             return err
@@ -27,7 +29,7 @@ exports.getAllPosts = async (user_id) => {
         const user_profile = await Profile.findOne({user_id:user_id})
         const friendsArr = user_profile.friends
         friendsArr.push(user_profile._id)
-        const data = await Posts.find({author_id:{$in:friendsArr}}).populate('author_id').populate('comments.profile_id').exec();
+        const data = await Posts.find({author_id:{$in:friendsArr}}).populate('author_id').populate('comments.profile_id').sort({'date':-1}).exec();
 
         // console.log('SERVICE=>>>>>',data)
         return data;
@@ -39,7 +41,6 @@ exports.getAllPosts = async (user_id) => {
 exports.likePost = async (user_profile_id, post_id) => {
     try {
         const post = await Posts.findOne({_id:post_id})
-        console.log(post)
         post.likes.push(user_profile_id)
         let idx = post.dislikes.indexOf(user_profile_id)
         if(idx>-1)
@@ -130,7 +131,26 @@ exports.createComment = async (profile_id,post_id,comment) =>{
         return data;
     }
     catch(e){
-        console.log(e)
+        return e;
+    }
+}
+exports.verifyLikeStatus = async (profile_id,post_id)=>{
+    try{
+        const data = await Posts.findOne({_id:post_id})
+        let idx = data.likes.indexOf(profile_id)
+        return (idx>-1)?true:false
+    }
+    catch(e){
+        return e;
+    }
+}
+exports.verifyDislikeStatus = async (profile_id,post_id)=>{
+    try{
+        const data = await Posts.findOne({_id:post_id})
+        let idx = data.dislikes.indexOf(profile_id)
+        return (idx>-1)?true:false
+    }
+    catch(e){
         return e;
     }
 }

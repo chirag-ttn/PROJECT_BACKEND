@@ -26,6 +26,7 @@ exports.createProfile = async (data) => {
             new_profile = await profile.save();
         }
         else {
+            const profile_img = await Users.findById({_id:data.id},{'profile_pic':1})
             const all_profile_data = await Profile.aggregate([{$project:{"_id":1}}])
             const profile = new Profile({
                 firstname: data.body.firstname,
@@ -38,7 +39,8 @@ exports.createProfile = async (data) => {
                 zip: data.body.zip,
                 state: data.body.state,
                 user_id: data.id,
-                suggestions: all_profile_data
+                suggestions: all_profile_data,
+                profile_image:profile_img
             })
             new_profile = await profile.save()
             
@@ -91,12 +93,20 @@ exports.getAnyUserProfile = async (id) => {
         return new Error(err);
     }
 }
-exports.getAnyUserProfile = async (id,file) => {
+exports.uploadImage = async (id,file) => {
     try {
-
+        const profile = await Profile.findOne({ user_id: id })        
         const { url } = await cloudinary.uploader.upload(file.path)
-        const user = await Profile.findOne({ user_id: id })
         
+        if(file.fieldName=='profile_image')
+        {
+            profile.profile_image = url
+        }
+        else
+        {
+            profile.cover_image = url
+        }
+        return await profile.save()
     }
     catch (err) {
         return new Error(err);
