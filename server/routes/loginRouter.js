@@ -7,7 +7,8 @@ const UserController = require('../controllers/UserController')
 require('../auth-strategies/google')
 
 function generateUserToken(req, res,next) {
-    const id = req.user[0]._id===undefined?req.user._id:req.user[0]._id
+    console.log("req object=======>",req.user)
+    const id = req.user._id===undefined?req.user[0]._id:req.user._id
     const accessToken = token.generateAccessToken(id);
     
     res.cookie('token',accessToken)

@@ -12,13 +12,9 @@ exports.createPost = async function(data,res){
             date: new Date()
         }
         let new_post = new Posts(post)
-        new_post.save().then(data=>{
-            console.log(data)
-            return data
-        })
-        .catch(err=>{
-            return err
-        })
+        const data = await new_post.save()
+        console.log(data)
+        return data;
     }
     catch (e) { 
         return e;

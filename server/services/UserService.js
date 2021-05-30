@@ -12,8 +12,7 @@ exports.getAllUsers = async () => {
 exports.getUser = async (user_id) => {
     try {
 
-        const data = await (await Users.findById(user_id))
-        console.log(data)
+        const data = (await Users.findById(user_id))
         return data;
     }
     catch (err) {
@@ -172,7 +171,6 @@ exports.rejectFriendResponded = async (user_id, friend_id) => {
 exports.revokeRequest = async (user_id, friend_id) => {
     try {
         //if a user revokes sended request
-        console.log(user_id, friend_id)
         // user view
         //user_id -> pull friend_id from requested && push friend_id to suggestions or not
         const user_profile = await Profiles.findOneAndUpdate(

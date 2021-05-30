@@ -9,14 +9,29 @@ exports.createPost = async (req, res) => {
         const file = req.files.image
         const text = req.body.text
         const id = req.body.profile_id
-
-        const { url } = await cloudinary.uploader.upload(file.path)
+        
+        let finalUrl = null;
+        if(file===undefined)
+        {
+            finalUrl = 'no-image'
+        }
+        else if(text === undefined)
+        {   
+            console.log(file,text)
+            text = ''
+             let {url} = await cloudinary.uploader.upload(file.path)
+             finalUrl = url
+        }
+        else
+        {
+             let {url}  = await cloudinary.uploader.upload(file.path)
+             finalUrl = url
+        }
         const data = {
             id: id,
             text: text,
-            url: url
+            url: finalUrl
         }
-        console.log(data)
         const post = {
             description: data.text,
             author_id: data.id,
@@ -26,16 +41,14 @@ exports.createPost = async (req, res) => {
 
         const new_post = new Posts(post);
         const response = await new_post.save()
-        // console.log(response)
-        // updating profile with post id
+        const find_data = await Posts.findById({_id:response._id}).populate('author_id').exec()
         const profile = await Profile.findOneAndUpdate({ _id: id }, {
             $addToSet: {
                 'posts': response._id
             }
         })
         const resp = await profile.save()
-        // console.log(resp)
-        res.send(response)
+        res.send(find_data)
 
     }
     catch (e) {
@@ -140,7 +153,6 @@ exports.getFlaggedPosts = async (req, res, next) => {
 //moderator
 exports.removeFlaggedPosts = async (req,res,next) => {
     try {
-        console.log('remove ')
         const {post_id} = req.body
         const response = await PostService.removeFlaggedPost(post_id)
         res.send(response)

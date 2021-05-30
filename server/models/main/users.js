@@ -21,7 +21,10 @@ const userSchema = new Schema({
     minlength: 5,
     maxlength: 255,
   },
-
+  role:{
+    type:String,
+    default:'user'
+  },
   profile_pic: {
     type: String,
   },

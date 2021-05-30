@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
 exports.createProfile = async (data) => {
 
     try {
-        //find all the profile_ids of all users and add it to suggestions initially
         let new_profile = null
         const ifProfileExist = await Profile.findOne({ user_id: data.id }).exec()
         if (ifProfileExist) {
@@ -26,7 +25,7 @@ exports.createProfile = async (data) => {
             new_profile = await profile.save();
         }
         else {
-            const profile_img = await Users.findById({_id:data.id},{'profile_pic':1})
+            const profile_img = await Users.findById({_id:data.id},{'profile_pic':1,_id:0})
             
             const all_profile_data = await Profile.aggregate([{$project:{"_id":1}}])
             const profile = new Profile({
@@ -41,7 +40,7 @@ exports.createProfile = async (data) => {
                 state: data.body.state,
                 user_id: data.id,
                 suggestions: all_profile_data,
-                profile_image:profile_img
+                profile_image:profile_img.profile_pic
             })
             new_profile = await profile.save()
             
