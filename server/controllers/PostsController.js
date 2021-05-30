@@ -123,8 +123,8 @@ exports.undislikePost = async (req, res, next) => {
 }
 exports.flagPost = async (req, res, next) => {
     try {
-        const { user_profile_id, post_id } = req.body
-        const response = await PostService.flagPost(user_profile_id, post_id)
+        const { profile_id, post_id } = req.body
+        const response = await PostService.flagPost(profile_id, post_id)
         res.send(response)
     }
     catch (e) {
@@ -133,8 +133,8 @@ exports.flagPost = async (req, res, next) => {
 }
 exports.unflagPost = async (req, res, next) => {
     try {
-        const { user_profile_id, post_id } = req.body
-        const response = await PostService.unflagPost(user_profile_id, post_id)
+        const { profile_id, post_id } = req.body
+        const response = await PostService.unflagPost(profile_id, post_id)
         res.send(response)
     }
     catch (e) {
@@ -183,27 +183,4 @@ exports.createComment = async (req, res, next) => {
         res.send(e)
     }
     
-}
-exports.verifyLikeStatus = async (req,res) => {
-    try {
-        const {user_profile_id,post_id} = req.query
-        const response = await PostService.verifyLikeStatus(user_profile_id,post_id)
-        res.send(response)
-    }
-    catch (e) {
-        res.send(e)
-    }
-}
-
-exports.verifyDislikeStatus = async (req,res) => {
-    try {
-        const {user_profile_id,post_id} = req.query
-        const response = await PostService.verifyDislikeStatus(user_profile_id,post_id)
-        console.log(response)
-        res.send(response)
-
-    }
-    catch (e) {
-        res.send(e)
-    }
 }

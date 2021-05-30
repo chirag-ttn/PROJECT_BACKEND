@@ -96,7 +96,14 @@ exports.undislikePost = async (user_profile_id, post_id) => {
 }
 exports.flagPost = async (user_id, post_id) => {
     try {
-        const post = await Posts.findOneAndUpdate({_id:post_id},{$inc:{'flagged':1}})
+        console.log('flagging')
+        const post = await Posts.findOneAndUpdate(
+            {_id:post_id},
+            {
+                $addToSet:{
+                    'flagged':user_id
+                }
+            })
         return await post.save()
     }
     catch (e) {
@@ -106,7 +113,11 @@ exports.flagPost = async (user_id, post_id) => {
 
 exports.unflagPost = async (user_id, post_id) => {
     try {
-        const post = await Posts.findOneAndUpdate({_id:post_id},{$dec:{'flagged':1}})
+        const post = await Posts.findOneAndUpdate(
+            {_id:post_id},
+            {
+                $pull:{'flagged':user_id}
+            })
         return await post.save()
     }
     catch (e) {
@@ -115,8 +126,7 @@ exports.unflagPost = async (user_id, post_id) => {
 }
 exports.getFlaggedPosts = async () => {
     try {
-        const post = await Posts.find({flagged:{$gte:5}})
-        
+        const post = await Posts.find({$where:'this.flagged.length'}).populate('author_id').populate('comments.profile_id').exec()
         return post;
     }
     catch (e) {
@@ -134,10 +144,12 @@ exports.removeFlaggedPost = async (post_id) => {
 }
 exports.approveFlaggedPost = async (post_id) => {
     try {
-        const post = await Posts.findOneAndUpdate({_id:post_id},{$set:{flagged:0}})
-        console.log(post)
+        const post = await Posts.findOneAndUpdate({_id:post_id},
+            {
+                $set:
+                {'flagged':[]}
+            })
         await post.save()
-        console.log('after',post)
         return post;
     }
     catch (e) {
@@ -156,26 +168,6 @@ exports.createComment = async (profile_id,post_id,comment) =>{
         const data = await post.save()
         // console.log('DATA======>',data)
         return data;
-    }
-    catch(e){
-        return e;
-    }
-}
-exports.verifyLikeStatus = async (profile_id,post_id)=>{
-    try{
-        const data = await Posts.findOne({_id:post_id})
-        let idx = data.likes.indexOf(profile_id)
-        return (idx>-1)?true:false
-    }
-    catch(e){
-        return e;
-    }
-}
-exports.verifyDislikeStatus = async (profile_id,post_id)=>{
-    try{
-        const data = await Posts.findOne({_id:post_id})
-        let idx = data.dislikes.indexOf(profile_id)
-        return (idx>-1)?true:false
     }
     catch(e){
         return e;

@@ -17,8 +17,7 @@ router.post('/likePost',auth,PostRouter.likePost);
 router.post('/unlikePost',auth,PostRouter.unlikePost);
 router.post('/dislikePost',auth,PostRouter.dislikePost);
 router.post('/undislikePost',auth,PostRouter.undislikePost);
-router.get('/verifyLikeStatus',auth,PostRouter.verifyLikeStatus);
-router.get('/verifyDislikeStatus',auth,PostRouter.verifyDislikeStatus);
+
 
 router.post('/createComment',auth,PostRouter.createComment);
 
