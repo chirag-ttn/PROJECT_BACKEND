@@ -69,6 +69,21 @@ exports.getAllPosts = async (req, res, next) => {
         res.send(e)
     }
 }
+exports.getPosts = async (req, res, next) => {
+    // console.log(req.body, req.user)
+
+    try {
+        console.log(req.query)
+        const user_id = req.user.sub;
+        const pageCount = Number(req.query.pageCount);
+        const postCount = Number(req.query.postCount);
+        const response = await PostService.getPosts(user_id, pageCount, postCount)//sync
+        res.send(response)
+    }
+    catch (e) {
+        res.send(e)
+    }
+}
 exports.likePost = async (req, res, next) => {
     // console.log(req.body, req.user)
 

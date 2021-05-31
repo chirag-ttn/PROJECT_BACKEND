@@ -11,6 +11,7 @@ const PostRouter = require('../controllers/PostsController');
 
 router.use(cors())
 router.get('/getAllPosts',auth,PostRouter.getAllPosts);
+router.get('/getPosts',auth,PostRouter.getPosts);
 router.post('/createPost',auth,PostRouter.createPost);
 
 router.post('/likePost',auth,PostRouter.likePost);

@@ -34,6 +34,18 @@ exports.getAllPosts = async (user_id) => {
         return e;
     }
 }
+exports.getPosts = async (user_id, pageCount, postCount) => {
+    try {
+        const user_profile = await Profile.findOne({user_id:user_id})
+        const friendsArr = user_profile.friends
+        friendsArr.push(user_profile._id)
+        const data = await Posts.find({author_id:{$in:friendsArr}}).populate('author_id').populate('comments.profile_id').sort({'date':-1}).skip(pageCount*5).limit(postCount).exec();
+        return data;
+    }
+    catch (e) {
+        return e;
+    }
+}
 exports.likePost = async (user_profile_id, post_id) => {
     try {
         const post = await Posts.findOne({_id:post_id})
@@ -126,7 +138,7 @@ exports.unflagPost = async (user_id, post_id) => {
 }
 exports.getFlaggedPosts = async () => {
     try {
-        const post = await Posts.find({$where:'this.flagged.length'}).populate('author_id').populate('comments.profile_id').exec()
+        const post = await Posts.find({$where:'this.flagged.length>5'}).populate('author_id').populate('comments.profile_id').exec()
         return post;
     }
     catch (e) {
