@@ -11,7 +11,7 @@ const UserRouter = require('../routes/userRouter')
 module.exports = function(app){
 
 app.use(cors())
-
+app.use(express.static('public'))
 //parsing json
 app.use(express.json())
 // for parsing application/xwww-form-urlencoded
