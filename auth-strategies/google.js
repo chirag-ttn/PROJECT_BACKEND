@@ -6,11 +6,12 @@ const cloudinary = require('../cloudinary')
 
 // const users = require('../users');
 const Users = require('../models/main/users')
+const {NODE_ENV,PROD_URL, DEV_RED_URL } = process.env
 
 const passportConfig = {
     clientID: process.env.CLIENT_ID,
     clientSecret:process.env.CLIENT_SECRET,
-    callbackURL: `${process.env.NODE_ENV==='production'?process.env.PROD_URL:process.env.DEV_URL}/api/auth/redirect`
+    callbackURL: `${NODE_ENV==='development'?DEV_URL:PROD_URL}/api/auth/redirect`
 };
 
 if (passportConfig.clientID) {
