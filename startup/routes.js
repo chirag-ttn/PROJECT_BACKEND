@@ -19,8 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing multipart/form-data
 app.use(formData.parse())
 
-app.get('/feeds',(req,res)=>{
-    res.send(`feeds`);
+app.get('*',(req,res)=>{
+    res.sendFile(`/home/ttn/Desktop/PROJECT/BACKEND/public/index.html`)
 })
 
 app.use('/home',homeRouter)
