@@ -19,13 +19,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing multipart/form-data
 app.use(formData.parse())
 
-app.get('*',(req,res)=>{
-    res.sendFile(`/home/ttn/Desktop/PROJECT/BACKEND/public/index.html`)
-})
 
 app.use('/home',homeRouter)
 app.use('/api/auth',loginRouter)
 app.use('/profile',ProfileRouter)
 app.use('/posts',PostRouter)
 app.use('/users',UserRouter)
+app.get('*',(req,res)=>{
+    res.sendFile(`/home/ttn/Desktop/PROJECT/BACKEND/public/index.html`)
+})
 }
