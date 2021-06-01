@@ -1,7 +1,7 @@
 const passport = require('passport');
 const passportGoogle = require('passport-google-oauth');
 require('dotenv').config()
-
+console.log(process.env.NODE_ENV)
 const cloudinary = require('../cloudinary')
 
 // const users = require('../users');

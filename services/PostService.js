@@ -108,7 +108,6 @@ exports.undislikePost = async (user_profile_id, post_id) => {
 }
 exports.flagPost = async (user_id, post_id) => {
     try {
-        console.log('flagging')
         const post = await Posts.findOneAndUpdate(
             {_id:post_id},
             {
@@ -139,10 +138,10 @@ exports.unflagPost = async (user_id, post_id) => {
 exports.getFlaggedPosts = async () => {
     try {
         const post = await Posts.find({}).sort({'date':-1}).populate('author_id').populate('comments.profile_id').lean().exec()
+        // console.log(post)
         const finalData = post.map(val=>{
             return val.flagged.length>=5?val:null
         })
-        
         // Posts.find({$where:'this.flagged.length'}).populate('author_id').populate('comments.profile_id').exec()
         return finalData;
     }
@@ -152,7 +151,11 @@ exports.getFlaggedPosts = async () => {
 }
 exports.removeFlaggedPost = async (post_id) => {
     try {
+        
+        const {author_id}= await Posts.findOne({_id:post_id}).lean()
         const post = await Posts.findOneAndDelete({_id:post_id})
+        const update =  await Profile.findOneAndUpdate({_id:author_id},{$pull:{posts:post_id}})
+        await update.save()
         return post;
     }
     catch (e) {
