@@ -9,15 +9,15 @@ exports.createPost = async (req, res) => {
         const file = req.files.image
         const text = req.body.text
         const id = req.body.profile_id
-        
+        console.log(file,text)
         let finalUrl = null;
         if(file===undefined)
         {
             finalUrl = 'no-image'
         }
-        else if(text === undefined)
+        else if(text === null)
         {   
-            console.log(file,text)
+            
             text = ''
              let {url} = await cloudinary.uploader.upload(file.path)
              finalUrl = url

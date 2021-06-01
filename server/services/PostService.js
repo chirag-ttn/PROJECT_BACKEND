@@ -138,8 +138,13 @@ exports.unflagPost = async (user_id, post_id) => {
 }
 exports.getFlaggedPosts = async () => {
     try {
-        const post = await Posts.find({$where:'this.flagged.length>5'}).populate('author_id').populate('comments.profile_id').exec()
-        return post;
+        const post = await Posts.find({}).sort({'date':-1}).populate('author_id').populate('comments.profile_id').lean().exec()
+        const finalData = post.map(val=>{
+            return val.flagged.length>=5?val:null
+        })
+        
+        // Posts.find({$where:'this.flagged.length'}).populate('author_id').populate('comments.profile_id').exec()
+        return finalData;
     }
     catch (e) {
         return e;

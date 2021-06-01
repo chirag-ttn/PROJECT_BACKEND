@@ -1,7 +1,9 @@
 const mongoose = require('mongoose')
-module.exports = function(){
+require('dotenv').config()
 
-    mongoose.connect('mongodb://localhost:27017/buzzz',{useNewUrlParser:true})
+module.exports = function(){
+    console.log(process.env.MONGO_URL)
+    mongoose.connect(process.env.MONGO_URL,{useNewUrlParser:true, useUnifiedTopology:true})
     .then(()=>{
         console.log('Database connected!')
     })
