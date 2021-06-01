@@ -19,7 +19,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing multipart/form-data
 app.use(formData.parse())
 
-
+app.get('/feeds',(req,res)=>{
+    res.send(`feeds`);
+})
 
 app.use('/home',homeRouter)
 app.use('/api/auth',loginRouter)

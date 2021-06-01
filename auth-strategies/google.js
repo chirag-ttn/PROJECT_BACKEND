@@ -6,7 +6,7 @@ const cloudinary = require('../cloudinary')
 
 // const users = require('../users');
 const Users = require('../models/main/users')
-const {NODE_ENV,PROD_URL, DEV_RED_URL } = process.env
+const {NODE_ENV,PROD_URL, DEV_URL } = process.env
 
 const passportConfig = {
     clientID: process.env.CLIENT_ID,
