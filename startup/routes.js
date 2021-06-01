@@ -26,6 +26,6 @@ app.use('/profile',ProfileRouter)
 app.use('/posts',PostRouter)
 app.use('/users',UserRouter)
 app.get('*',(req,res)=>{
-    res.sendFile(`/home/ttn/Desktop/PROJECT/BACKEND/public/index.html`)
+    res.sendFile('index.html')
 })
 }
