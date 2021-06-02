@@ -51,7 +51,7 @@ exports.likePost = async (user_profile_id, post_id) => {
         const post = await Posts.findOne({_id:post_id})
         post.likes.push(user_profile_id)
         let idx = post.dislikes.indexOf(user_profile_id)
-        if(idx>-1 && dislike)
+        if(idx>-1)
         {
             post.dislikes.splice(idx,1)
         }
@@ -75,13 +75,12 @@ exports.unlikePost = async (user_profile_id, post_id) => {
         return e;
     }
 }
-exports.dislikePost = async (user_profile_id, post_id,like) => {
+exports.dislikePost = async (user_profile_id, post_id) => {
     try {
         const post = await Posts.findOne({_id:post_id})
         post.dislikes.push(user_profile_id)
         let idx = post.likes.indexOf(user_profile_id)
-        
-        if(idx>-1 && like)
+        if(idx>-1)
         {
             post.likes.splice(idx,1)
         }
@@ -109,6 +108,7 @@ exports.undislikePost = async (user_profile_id, post_id) => {
 }
 exports.flagPost = async (user_id, post_id) => {
     try {
+        // console.log('flagging')
         const post = await Posts.findOneAndUpdate(
             {_id:post_id},
             {
@@ -139,10 +139,10 @@ exports.unflagPost = async (user_id, post_id) => {
 exports.getFlaggedPosts = async () => {
     try {
         const post = await Posts.find({}).sort({'date':-1}).populate('author_id').populate('comments.profile_id').lean().exec()
-        // console.log(post)
         const finalData = post.map(val=>{
             return val.flagged.length>=5?val:null
         })
+        
         // Posts.find({$where:'this.flagged.length'}).populate('author_id').populate('comments.profile_id').exec()
         return finalData;
     }
@@ -152,11 +152,7 @@ exports.getFlaggedPosts = async () => {
 }
 exports.removeFlaggedPost = async (post_id) => {
     try {
-        
-        const {author_id}= await Posts.findOne({_id:post_id}).lean()
         const post = await Posts.findOneAndDelete({_id:post_id})
-        const update =  await Profile.findOneAndUpdate({_id:author_id},{$pull:{posts:post_id}})
-        await update.save()
         return post;
     }
     catch (e) {

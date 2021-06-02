@@ -25,7 +25,7 @@ app.use('/api/auth',loginRouter)
 app.use('/profile',ProfileRouter)
 app.use('/posts',PostRouter)
 app.use('/users',UserRouter)
-console.log(__dirname.split('startup')[0]+'public/index.html')
+//console.log(__dirname.split('startup')[0]+'public/index.html')
 app.get('*',(req,res)=>{
     res.sendFile(__dirname.split('startup')[0]+'public/index.html')
 })
