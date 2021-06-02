@@ -90,7 +90,7 @@ exports.likePost = async (req, res, next) => {
     try {
         console.log(req.body)
         const { user_profile_id, post_id } = req.body
-        const response = PostService.likePost(user_profile_id, post_id)
+        const response = PostService.likePost(user_profile_id, post_id,dislike)
         res.send(response)
     }
     catch (e) {
@@ -114,8 +114,8 @@ exports.dislikePost = async (req, res, next) => {
     // console.log(req.body, req.user)
 
     try {
-        const { user_profile_id, post_id } = req.body
-        const response = PostService.dislikePost(user_profile_id, post_id)
+        const { user_profile_id, post_id,like } = req.body
+        const response = PostService.dislikePost(user_profile_id, post_id,like)
         res.send(response)
     }
     catch (e) {

@@ -51,7 +51,7 @@ exports.likePost = async (user_profile_id, post_id) => {
         const post = await Posts.findOne({_id:post_id})
         post.likes.push(user_profile_id)
         let idx = post.dislikes.indexOf(user_profile_id)
-        if(idx>-1)
+        if(idx>-1 && dislike)
         {
             post.dislikes.splice(idx,1)
         }
@@ -75,12 +75,13 @@ exports.unlikePost = async (user_profile_id, post_id) => {
         return e;
     }
 }
-exports.dislikePost = async (user_profile_id, post_id) => {
+exports.dislikePost = async (user_profile_id, post_id,like) => {
     try {
         const post = await Posts.findOne({_id:post_id})
         post.dislikes.push(user_profile_id)
         let idx = post.likes.indexOf(user_profile_id)
-        if(idx>-1)
+        
+        if(idx>-1 && like)
         {
             post.likes.splice(idx,1)
         }
