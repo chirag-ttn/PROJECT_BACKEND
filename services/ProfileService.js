@@ -15,7 +15,6 @@ exports.createProfile = async (data) => {
             profile.firstname = data.body.firstname
             profile.lastname = data.body.lastname
             profile.designation = data.body.designation
-            profile.website = data.body.website
             profile.gender = data.body.gender
             profile.dob = data.body.dob
             profile.city = data.body.city
@@ -32,7 +31,6 @@ exports.createProfile = async (data) => {
                 firstname: data.body.firstname,
                 lastname: data.body.lastname,
                 designation: data.body.designation,
-                website: data.body.website,
                 gender: data.body.gender,
                 dob: data.body.dob,
                 city: data.body.city,

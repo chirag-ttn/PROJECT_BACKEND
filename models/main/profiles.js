@@ -27,10 +27,6 @@ let ProfileSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    website: {
-        type: String,
-        required: true,
-    },
     designation: {
         type: String,
         required: true,
