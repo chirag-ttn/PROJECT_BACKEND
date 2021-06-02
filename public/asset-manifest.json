@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.8e64838b.chunk.css",
-    "main.js": "/static/js/main.049438a6.chunk.js",
-    "main.js.map": "/static/js/main.049438a6.chunk.js.map",
+    "main.js": "/static/js/main.d960cd1d.chunk.js",
+    "main.js.map": "/static/js/main.d960cd1d.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.68424d85.js",
     "runtime-main.js.map": "/static/js/runtime-main.68424d85.js.map",
     "static/css/2.ef9168ec.chunk.css": "/static/css/2.ef9168ec.chunk.css",
@@ -14,7 +14,7 @@
     "static/css/2.ef9168ec.chunk.css.map": "/static/css/2.ef9168ec.chunk.css.map",
     "static/css/main.8e64838b.chunk.css.map": "/static/css/main.8e64838b.chunk.css.map",
     "static/js/2.42b14b92.chunk.js.LICENSE.txt": "/static/js/2.42b14b92.chunk.js.LICENSE.txt",
-    "static/js/main.049438a6.chunk.js.LICENSE.txt": "/static/js/main.049438a6.chunk.js.LICENSE.txt",
+    "static/js/main.d960cd1d.chunk.js.LICENSE.txt": "/static/js/main.d960cd1d.chunk.js.LICENSE.txt",
     "static/media/TTN.a383d182.jpg": "/static/media/TTN.a383d182.jpg",
     "static/media/CreateProfile.css": "/static/media/bg-image.32500ade.jpg"
   },
@@ -23,6 +23,6 @@
     "static/css/2.ef9168ec.chunk.css",
     "static/js/2.42b14b92.chunk.js",
     "static/css/main.8e64838b.chunk.css",
-    "static/js/main.049438a6.chunk.js"
+    "static/js/main.d960cd1d.chunk.js"
   ]
 }
