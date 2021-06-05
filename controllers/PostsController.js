@@ -88,7 +88,6 @@ exports.likePost = async (req, res, next) => {
     // console.log(req.body, req.user)
 
     try {
-        console.log(req.body)
         const { user_profile_id, post_id, dislike } = req.body
         const response = PostService.likePost(user_profile_id, post_id,dislike)
         res.send(response)
@@ -98,7 +97,6 @@ exports.likePost = async (req, res, next) => {
     }
 }
 exports.unlikePost = async (req, res, next) => {
-    // console.log(req.body, req.user)
 
     try {
         const { user_profile_id, post_id } = req.body
@@ -190,8 +188,9 @@ exports.approveFlaggedPosts = async (req,res,next) => {
 exports.createComment = async (req, res, next) => {
 
     try {
-        const { profile_id, post_id, comment} = req.body
-        const data = await PostService.createComment(profile_id, post_id, comment)
+        // console.log(req.body)
+        const { user_profile_id, post_id, comment} = req.body
+        const data = await PostService.createComment(user_profile_id, post_id, comment)
         res.send(data)
     }
     catch(e){
