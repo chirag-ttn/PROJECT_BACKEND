@@ -46,7 +46,7 @@ exports.getPosts = async (user_id, pageCount, postCount) => {
         return e;
     }
 }
-exports.likePost = async (user_profile_id, post_id) => {
+exports.likePost = async (user_profile_id, post_id, dislike) => {
     try {
         const post = await Posts.findOne({_id:post_id})
         post.likes.push(user_profile_id)
@@ -58,6 +58,7 @@ exports.likePost = async (user_profile_id, post_id) => {
         return await post.save()
     }
     catch (e) {
+        console.log(e)
         return e;
     }
 }

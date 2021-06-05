@@ -88,8 +88,8 @@ exports.likePost = async (req, res, next) => {
     // console.log(req.body, req.user)
 
     try {
-        // console.log(req.body)
-        const { user_profile_id, post_id } = req.body
+        console.log(req.body)
+        const { user_profile_id, post_id, dislike } = req.body
         const response = PostService.likePost(user_profile_id, post_id,dislike)
         res.send(response)
     }
