@@ -51,6 +51,7 @@ exports.getAnyUserProfile = async (req, res) => {
 exports.uploadImage = async (req,res) =>{
     try{
         let file;
+        console.log(req.files)
         if(req.files.profile_image)
         {
             file = req.files.profile_image
