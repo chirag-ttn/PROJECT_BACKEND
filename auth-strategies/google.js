@@ -16,7 +16,7 @@ const passportConfig = {
 
 if (passportConfig.clientID) {
     passport.use(new passportGoogle.OAuth2Strategy(passportConfig, function (request, accessToken, refreshToken, profile, done) {
-        
+        // console.log('profile',profile)
         Users.find({email:profile.emails[0].value},(err,user)=>{
             
             if(err) return done(err);
