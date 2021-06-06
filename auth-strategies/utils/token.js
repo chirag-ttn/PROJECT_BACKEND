@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config()
 // Generate an Access Token for the given User ID
 function generateAccessToken(userId) {
-    const expiresIn = '1 day';
+    const expiresIn = '1d';
     const audience = process.env.AUDIENCE;
     const issuer = process.env.ISSUER;
     const secret = process.env.SECRET_OR_KEY;
